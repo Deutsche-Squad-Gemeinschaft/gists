@@ -1,7 +1,11 @@
-# Gists
-Since organizations can not have gists.
-
-<hr>  
+<div align="center">
+    <h1>Gists</h1>
+    <b>Since organizations can not have gists.</b>
+    <hr>
+    <a href="https://dsg-gaming.de">
+        <img alt="Deutsche Squad Gemeinschaft" src="https://raw.githubusercontent.com/Deutsche-Squad-Gemeinschaft/gists/master/dsg-badge.svg">
+    </a>
+</div>
 
 ## Table of Contents  
 * [Server setup](https://github.com/Deutsche-Squad-Gemeinschaft/gists/blob/master/server-setup.md)
