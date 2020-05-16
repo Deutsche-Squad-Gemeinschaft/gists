@@ -80,8 +80,6 @@ this does require installing the [AWS CLI](https://aws.amazon.com/de/cli/):
 
 # Server dir, not install dir, contains setup.sh
 SERVERDIR=/path/to/serverdir
-# The forceinstalldir, normally something like /server
-INSTALLDIR=server
 
 ###########
 # Execute #
@@ -93,7 +91,7 @@ BACKUPTMP=`mktemp -d
 cp $SERVERDIR/setup.sh $BACKUPTMP/
 
 # Copy the configuration directory
-cp -r $SERVERDIR/$INSTALLDIR/SquadGame/ServerConfig $BACKUPTMP
+cp -r $SERVERDIR/server/SquadGame/ServerConfig $BACKUPTMP
 
 # Archive result
 DATE=$(date +%Y-%m-%d-%H%M%S)
@@ -105,6 +103,20 @@ aws s3 cp $BACKUPTMP/backup-$DATE.tar.gz s3://mybucket/myfolder
 
 # Delete TMP directory
 rm -r $BACKUPTMP
+```
+
+**setup.sh (example)**
+```bash
+# Update the game
+/usr/games/steamcmd +login anonymous +force_install_dir /path/to/serverdir/server +app_update 403240 validate +quit
+
+# Uninstall a mod
+rm -r $SERVERDIR/$INSTALLDIR/SquadGame/Plugins/Mods/$MODID
+
+# Install a mod
+/usr/games/steamcmd +login anonymous +force_install_dir /path/to/serverdir/server +workshop_download_item 393380 $MODID +quit
+cp -R /path/to/serverdir/server/steamapps/workshop/content/393380/$MODID  /path/to/serverdir/server/SquadGame/Plugins/Mods/
+
 ```
 ## Commands
 Start: `sudo service squad start`  
