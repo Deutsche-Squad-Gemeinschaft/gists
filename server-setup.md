@@ -132,3 +132,4 @@ Restart: `sudo service squad restart`
 Status/Output/Log: `sudo service squad status`  
 
 Follow Log: `tail -f /path/to/server/SquadGame/Saved/Logs/SquadGame.log`
+Create dump: `gcore -o /path/to/dump $PID`
