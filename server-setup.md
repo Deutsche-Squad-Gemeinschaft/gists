@@ -122,6 +122,8 @@ rm -r $SERVERDIR/server/SquadGame/Plugins/Mods/$MODID
 cp -R /$SERVERDIR/server/steamapps/workshop/content/393380/$MODID  $SERVERDIR/server/SquadGame/Plugins/Mods/
 
 ```
+**You may notice that to install a new server it is enough to execute the setup.sh once.**
+
 ## Commands
 Start: `sudo service squad start`  
 Stop: `sudo service squad stop`  
