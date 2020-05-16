@@ -107,15 +107,19 @@ rm -r $BACKUPTMP
 
 **setup.sh (example)**
 ```bash
+#!/bin/bash
+# Configure
+$SERVERDIR=/path/to/serverdir
+
 # Update the game
-/usr/games/steamcmd +login anonymous +force_install_dir /path/to/serverdir/server +app_update 403240 validate +quit
+/usr/games/steamcmd +login anonymous +force_install_dir $SERVERDIR/server +app_update 403240 validate +quit
 
 # Uninstall a mod
-rm -r $SERVERDIR/$INSTALLDIR/SquadGame/Plugins/Mods/$MODID
+rm -r $SERVERDIR/server/SquadGame/Plugins/Mods/$MODID
 
 # Install a mod
-/usr/games/steamcmd +login anonymous +force_install_dir /path/to/serverdir/server +workshop_download_item 393380 $MODID +quit
-cp -R /path/to/serverdir/server/steamapps/workshop/content/393380/$MODID  /path/to/serverdir/server/SquadGame/Plugins/Mods/
+/usr/games/steamcmd +login anonymous +force_install_dir $SERVERDIR/server +workshop_download_item 393380 $MODID +quit
+cp -R /$SERVERDIR/server/steamapps/workshop/content/393380/$MODID  $SERVERDIR/server/SquadGame/Plugins/Mods/
 
 ```
 ## Commands
