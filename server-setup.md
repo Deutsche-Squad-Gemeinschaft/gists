@@ -5,6 +5,7 @@ Requirements:
 - Linux
 - Cron
 - SystemD
+- [AWS CLI](https://aws.amazon.com/de/cli/) (Optional)
 
 ## Create a service
 Using a service to control the start/stop/restart of our server gives us really everything we need for an automated Squad server.
