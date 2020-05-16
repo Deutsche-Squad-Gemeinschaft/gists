@@ -23,7 +23,7 @@ WorkingDirectory=/path/to/install/has/to/end/with/server
 User=squad
 Type=simple
 TimeoutSec=300
-ExecStartPre=/path/to/setup/script.sh <-- Handles Updates & Mods
+ExecStartPre=/path/to/setup/script.sh
 ExecStart=/path/to/install/has/to/end/with/server/SquadGameServer.sh Port=7787 QueryPort=27165 FIXEDMAXPLAYERS=80 RANDOM=NONE
 ExecStop=/bin/kill -2 $MAINPID
 Restart=on-failure
