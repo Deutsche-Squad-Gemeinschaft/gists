@@ -10,7 +10,7 @@ Requirements:
   - `sudo apt i gdm -y`
 
 ## Create a service
-Using a service to control the start/stop/restart of our server gives us really everything we need for an automated Squad server.
+Using a [service/daemon](https://en.wikipedia.org/wiki/Daemon_(computing)) for our server and systemd to control it does give us a lot of what we need for an automated Squad server setup: start/stop/restart commands, auto-restart, start after boot, adjusting the CPU Affinity and [much more](https://www.freedesktop.org/software/systemd/man/systemd.unit.html#Wants=).
 To create the service, navigate to `/etc/systemd/system/` and create a new service file and paste the contents below:  
 
 **squad.service**
