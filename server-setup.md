@@ -1,7 +1,7 @@
 This guide shows a very simple automated Squad server setup using services and scheduling on Linux.
 It hadles **automated restarts**, **updates**, **backups**, **mods** and **CPU affinity**. It can easily be modified and extended and should be ready for use in production.
 
-Requirements:
+## Requirements
 - Cron (preinstalled)
 - SystemD (preinstalled)
 - [AWS CLI](https://aws.amazon.com/de/cli/) (Optional Backups)
