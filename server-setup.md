@@ -59,7 +59,7 @@ it will automatically update the game and install your mods (according to your s
 ## Automatic Restart & Backup
 In order to automatically restart and backup the server i use Cron. This only requires to write the according lines into your Crontab.
 **Remember that each user on linux has it's own crontab!** You can open and edit your crontab by using the command `crontab -e`, just edit it to your needs.
-The included documentation in the file is really all you need to understand it and it takes 1 mnute to read.
+The included explanation below is really all you need to understand it and it takes <1 minute to read.
 
 **crontab**
 ```
