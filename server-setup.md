@@ -73,7 +73,7 @@ rm -r $SERVERDIR/server/SquadGame/Plugins/Mods/$MODID
 cp -R /$SERVERDIR/server/steamapps/workshop/content/393380/$MODID  $SERVERDIR/server/SquadGame/Plugins/Mods/
 
 ```
-**You may notice that to install a new server it is enough to execute the setup.sh once.**
+**You may notice that to install a new server it is enough to copy and execute the setup.sh once.**
 
 ## Automatic Restart & Backup
 In order to automatically restart and backup the server i use Cron. This only requires to write the according lines into your Crontab.
