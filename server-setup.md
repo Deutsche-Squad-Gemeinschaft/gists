@@ -19,7 +19,7 @@ Description=Deutsche Squad Gemeinschaft: Public - https://dsg-gaming.de
 After=caddy.service
 
 [Service]
-CPUAffinity=6 7
+CPUAffinity=0 1 2 3 4 5 6 7
 WorkingDirectory=/path/to/install/has/to/end/with/server
 User=squad
 Type=simple
