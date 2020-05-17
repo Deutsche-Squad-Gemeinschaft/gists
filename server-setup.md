@@ -9,7 +9,7 @@ Requirements:
 - [gcore](http://man7.org/linux/man-pages/man1/gcore.1.html) (Optional Memory Dumps)
   - `sudo apt i gdm -y`
 
-## Create a service
+## Using a Service
 Using a [service/daemon](https://en.wikipedia.org/wiki/Daemon_(computing)) for our server and systemd to control it does give us a lot of what we need for an automated Squad server setup: start/stop/restart commands, auto-restart, start after boot, adjusting the CPU Affinity and [much more](https://www.freedesktop.org/software/systemd/man/systemd.unit.html#Wants=).
 To create the service, navigate to `/etc/systemd/system/` and create a new service file and paste the contents below:  
 
@@ -55,6 +55,25 @@ and finish before your server will be started.
 
 Thats it pretty much, you can now start/stop/restart your server from anywhere,
 it will automatically update the game and install your mods (according to your setup.sh).
+
+**setup.sh (example)**
+```bash
+#!/bin/bash
+# Configure
+$SERVERDIR=/path/to/serverdir
+
+# Update the game
+/usr/games/steamcmd +login anonymous +force_install_dir $SERVERDIR/server +app_update 403240 validate +quit
+
+# Uninstall a mod
+rm -r $SERVERDIR/server/SquadGame/Plugins/Mods/$MODID
+
+# Install a mod
+/usr/games/steamcmd +login anonymous +force_install_dir $SERVERDIR/server +workshop_download_item 393380 $MODID +quit
+cp -R /$SERVERDIR/server/steamapps/workshop/content/393380/$MODID  $SERVERDIR/server/SquadGame/Plugins/Mods/
+
+```
+**You may notice that to install a new server it is enough to execute the setup.sh once.**
 
 ## Automatic Restart & Backup
 In order to automatically restart and backup the server i use Cron. This only requires to write the according lines into your Crontab.
@@ -113,25 +132,6 @@ aws s3 cp $BACKUPTMP/backup-$DATE.tar.gz s3://mybucket/myfolder
 # Delete TMP directory
 rm -r $BACKUPTMP
 ```
-
-**setup.sh (example)**
-```bash
-#!/bin/bash
-# Configure
-$SERVERDIR=/path/to/serverdir
-
-# Update the game
-/usr/games/steamcmd +login anonymous +force_install_dir $SERVERDIR/server +app_update 403240 validate +quit
-
-# Uninstall a mod
-rm -r $SERVERDIR/server/SquadGame/Plugins/Mods/$MODID
-
-# Install a mod
-/usr/games/steamcmd +login anonymous +force_install_dir $SERVERDIR/server +workshop_download_item 393380 $MODID +quit
-cp -R /$SERVERDIR/server/steamapps/workshop/content/393380/$MODID  $SERVERDIR/server/SquadGame/Plugins/Mods/
-
-```
-**You may notice that to install a new server it is enough to execute the setup.sh once.**
 
 ## Commands
 Start: `sudo service squad start`  
