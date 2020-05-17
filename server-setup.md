@@ -7,6 +7,7 @@ Requirements:
 - SystemD
 - [AWS CLI](https://aws.amazon.com/de/cli/) (Optional Backups)
 - [gcore](http://man7.org/linux/man-pages/man1/gcore.1.html) (Optional Memory Dumps)
+ - `sudo apt i gdm -y`
 
 ## Create a service
 Using a service to control the start/stop/restart of our server gives us really everything we need for an automated Squad server.
