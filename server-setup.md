@@ -1,10 +1,9 @@
-This guide shows a very simple automated Squad server setup on Linux using FOSS.
-It hadles automated restarts, updates, backups, mods and cpu affinity.
+This guide shows a very simple automated Squad server setup using services and scheduling on Linux.
+It hadles **automated restarts**, **updates**, **backups**, **mods** and **CPU affinity**. It can easily be modified and extended and should be ready for use in production.
 
 Requirements:
-- Linux
-- Cron
-- SystemD
+- Cron (preinstalled)
+- SystemD (preinstalled)
 - [AWS CLI](https://aws.amazon.com/de/cli/) (Optional Backups)
 - [gcore](http://man7.org/linux/man-pages/man1/gcore.1.html) (Optional Memory Dumps)
   - `sudo apt i gdm -y`
