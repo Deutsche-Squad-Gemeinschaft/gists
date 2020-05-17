@@ -54,7 +54,7 @@ Path to your magic setup script, you handle game updating and mod (un-)installin
 and finish before your server will be started.
 
 Thats it pretty much, you can now start/stop/restart your server from anywhere,
-it will automatically update the game and install your mods (according to your setup.sh).
+it will automatically update the game and install your mods (according to your setup.sh). The example below shows how that script could look like.
 
 **setup.sh (example)**
 ```bash
