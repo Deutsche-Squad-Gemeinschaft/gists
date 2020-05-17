@@ -63,6 +63,13 @@ The included documentation in the file is really all you need to understand it a
 
 **crontab**
 ```
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+#
+# For more information see the manual pages of crontab(5) and cron(8)
+# m h dom mon dow   command
+
 # Restart a server
 0 5 * * * /usr/sbin/service squad restart
 
