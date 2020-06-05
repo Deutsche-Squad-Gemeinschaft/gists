@@ -5,7 +5,7 @@ It hadles **automated restarts**, **updates**, **backups**, **mods** and **CPU a
 - Cron (preinstalled)
 - SystemD (preinstalled)
 - [AWS CLI](https://aws.amazon.com/de/cli/) (Optional Backups)
-- [gcore](http://man7.org/linux/man-pages/man1/gcore.1.html) (Optional Memory Dumps)
+- [gcore](http://man7.org/linux/man-pages/man1/gcore.1.html) (Optional Core Memory Dumps)
   - `sudo apt i gdm -y`
 
 ## Using a Service
@@ -139,4 +139,6 @@ Restart: `sudo service squad restart`
 Status/Output/Log: `sudo service squad status`  
 
 Follow Log: `tail -f /path/to/server/SquadGame/Saved/Logs/SquadGame.log`  
-Create dump: `gcore -o /path/to/dump $(systemctl show --property MainPID --value squad)`
+Create dump: 
+* Crash Dump: Put `-fullcrashdump` in your units ExecStart, these can get rather big and are stored at /server/SquadGame/Saved/Crashes
+* Core Dump: `gcore -o /path/to/dump $(systemctl show --property MainPID --value squad)`
