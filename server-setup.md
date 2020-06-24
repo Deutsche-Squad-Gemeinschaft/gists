@@ -1,4 +1,4 @@
-This guide shows a very simple automated Squad server setup using services and scheduling on Linux.
+This guide shows a very simple automated Squad server setup using services and scheduling on **Linux**. It does not or partly explain basic squad server installation knowledge so make sure to read the [Squad Wiki](https://squad.gamepedia.com/Server_Configuration) first.
 It hadles **automated restarts**, **updates**, **backups**, **mods** and **CPU affinity**. It can easily be modified and extended and should be ready for use in production.
 
 ## Requirements
