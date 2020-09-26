@@ -141,4 +141,4 @@ Status/Output/Log: `sudo service squad status`
 Follow Log: `tail -f /path/to/server/SquadGame/Saved/Logs/SquadGame.log`  
 Create dump: 
 * Crash Dump: Append `-fullcrashdump` in your units ExecStart startup command. **These dumps can get rather big** and will be stored at /path/to/server/SquadGame/Saved/Crashes
-* Core Dump: `gcore -o /path/to/dump $(systemctl show --property MainPID --value squad)`
+* In order to create an GDB core dump you can run the following command (assuming your service/unit is called Squad): `gcore -o /path/to/dump $(systemctl show --property MainPID --value squad)`
