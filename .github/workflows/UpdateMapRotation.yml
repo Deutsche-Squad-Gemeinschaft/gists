@@ -20,7 +20,7 @@ jobs:
     - name: Extract the default MapRotation
       run: MapRotation=$(docker run -it --rm -a stdout --entrypoint cat squad-server /home/steam/squad-dedicated/SquadGame/ServerConfig/MapRotation.cfg)
     - name: Clean and write the result to file
-      run: $MapRotation > ./data/MapRotation.cfg
+      run: ./.github/cleanMapRotation.sh "$MapRotation" > ./data/MapRotation.cfg
     - name: Commit & Push updated file
       uses: EndBug/add-and-commit@v7
       with:
