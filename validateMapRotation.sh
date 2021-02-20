@@ -1,4 +1,11 @@
 #!/bin/bash
+###############
+# Small helper script to determine if the provided MapRotation.cfg is valid or not.
+#
+# Usage:
+#  bash <(curl -s https://raw.githubusercontent.com/Deutsche-Squad-Gemeinschaft/gists/master/validateMapRotation.sh) ./MapRotation.cfg
+###############
+
 # Define basic colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
