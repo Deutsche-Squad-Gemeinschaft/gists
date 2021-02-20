@@ -17,7 +17,6 @@ jobs:
         token: ${{ github.token }}
     - name: Check for updates
       id: updatecheck
-      continue-on-error: true
       run: python -m pip --disable-pip-version-check install -Uq steam[client] && python ./.github/CheckForSquadServerUpdate.py
     - name: Dispatch UpdateMapRotation workflow
       if: steps.updatecheck.outputs == 'Update found.'
