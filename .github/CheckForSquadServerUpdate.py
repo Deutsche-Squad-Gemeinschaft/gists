@@ -41,10 +41,8 @@ if needle:
             f.write(lastUpdate)
 
         print('Update found.')
-        exit(0)
     else:
         print('No update found.')
-        exit(1)
 else:
     print('Could not find the correct depot!')
     exit(1)
