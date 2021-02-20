@@ -8,4 +8,12 @@
 </div>
 
 ## Table of Contents  
+* [Tools](#tools)
+* [Guides](#guides)
+
+## Tools
+* [CheckPort](https://github.com/Deutsche-Squad-Gemeinschaft/gists/blob/master/checkport.sh)
+* [ValidateMapRotation](https://github.com/Deutsche-Squad-Gemeinschaft/gists/blob/master/validateMapRotation.sh)
+
+## Guides
 * [Server setup](https://github.com/Deutsche-Squad-Gemeinschaft/gists/blob/master/server-setup.md)
