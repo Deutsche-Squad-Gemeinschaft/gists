@@ -3,7 +3,7 @@
 MapRotation="$1"
 
 # Remove blank lines
-MapRotation=$(echo "$MapRotation" | sed -r '/^$/d')
+MapRotation=$(echo "$MapRotation" | sed -r '/^\s*$/d')
 
 # Remove comments
 MapRotation=$(echo "$MapRotation" | sed -r '/^#/d')
