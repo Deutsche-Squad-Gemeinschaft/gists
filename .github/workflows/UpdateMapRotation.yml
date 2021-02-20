@@ -1,8 +1,6 @@
 name: UpdateMapRotation
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 0 * * 0"
 jobs:
   unit-tests:
     runs-on: [self-hosted, ec2, squad]
