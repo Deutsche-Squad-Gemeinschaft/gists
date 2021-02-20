@@ -8,7 +8,7 @@ jobs:
     runs-on: [self-hosted, ec2, squad]
     steps:
     - name: Pull repository
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
       with: 
         token: ${{ github.token }}
     - name: Stop & Remove any previous Server
