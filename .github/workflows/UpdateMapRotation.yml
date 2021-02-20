@@ -9,6 +9,8 @@ jobs:
     steps:
     - name: Pull repository
       uses: actions/checkout@v1
+      with: 
+        token: ${{ github.token }}
     - name: Stop & Remove any previous Server
       run: docker stop squad-server || true  && docker rm squad-server || true
     - name: Create the squad-server container and install the server
