@@ -17,12 +17,10 @@ jobs:
       run: docker run -d --net=bridge -e PORT=7787 -e QUERYPORT=27165 -e RCONPORT=21114 --name=squad-server cm2network/squad
     - name: Wait for Squad Server to install & boot
       run: chmod +x .github/waitForServerStartup.sh && ./.github/waitForServerStartup.sh
-    - name: Extract the default MapRotation
-      run: MapRotation=$(docker exec squad-server cat /home/steam/squad-dedicated/SquadGame/ServerConfig/MapRotation.cfg)
-    - name: Stop the container
-      run: docker stop squad-server
-    - name: Clean and write the result to file
-      run: chmod +x .github/cleanMapRotation.sh && ./.github/cleanMapRotation.sh "$MapRotation" > ./data/MapRotation.cfg
+    - name: Extract the default MapRotation, clean and write the result to file
+      run: >
+        MapRotation=$(docker exec squad-server cat /home/steam/squad-dedicated/SquadGame/ServerConfig/MapRotation.cfg) &&
+        chmod +x .github/cleanMapRotation.sh && ./.github/cleanMapRotation.sh "$MapRotation" > ./data/MapRotation.cfg
     - name: Commit & Push updated file
       uses: EndBug/add-and-commit@v7
       with:
