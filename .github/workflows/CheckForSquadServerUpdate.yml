@@ -1,6 +1,8 @@
 name: CheckForSquadServerUpdate
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "* * * * *"
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
