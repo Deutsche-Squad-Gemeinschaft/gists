@@ -1,0 +1,29 @@
+ame: UpdateMapRotation
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 0"
+jobs:
+  unit-tests:
+    runs-on: [self-hosted, ec2, squad]
+    steps:
+    - name: Pull repository
+      uses: actions/checkout@v1
+    - name: Stop & Remove any previous Server
+      run: docker stop squad-server || true  && docker rm squad-server || true
+    - name: Create the squad-server container and install the server
+      run: docker run -d --net=bridge -e PORT=7787 -e QUERYPORT=27165 -e RCONPORT=21114 --name=squad-server cm2network/squad
+    - name: Wait for Squad Server to install & boot
+      run: chmod +x .github/waitForServerStartup.sh && ./.github/waitForServerStartup.sh
+    - name: Stop the container
+      run: docker stop squad-server
+    - name: Extract the default MapRotation
+      run: MapRotation=$(docker run -it --rm -a stdout --entrypoint cat squad-server /home/steam/squad-dedicated/SquadGame/ServerConfig/MapRotation.cfg)
+    - name: Clean and write the result to file
+      run: $MapRotation > ./data/MapRotation.cfg
+    - name: Commit & Push updated file
+      uses: EndBug/add-and-commit@v7
+      with:
+        author_name: DSG-MapRotation Update-Bot
+        author_email: privat@skyraptor.eu
+        message: 'Updated default MapRotation'
