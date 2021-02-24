@@ -5,8 +5,9 @@ MapRotation="$1"
 # Remove blank lines
 MapRotation=$(echo "$MapRotation" | sed -r '/^\s*$/d')
 
-# Remove comments
+# Remove comments with # & // style
 MapRotation=$(echo "$MapRotation" | sed -r '/^#/d')
+MapRotation=$(echo "$MapRotation" | sed -r '/^\/\//d')
 
 # Output the cleaned MapRotation
 echo "$MapRotation"
