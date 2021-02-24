@@ -38,6 +38,7 @@ if needle:
     if lastUpdate != oldLastUpdate:
         # Update lastUpdate file
         with open('./data/lastUpdate' + system, "a+") as f:
+            f.truncate(0)
             f.write(lastUpdate)
 
         print('Update found.')
