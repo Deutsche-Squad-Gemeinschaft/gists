@@ -32,10 +32,10 @@ jobs:
         add: tmp/UpdateSquadServerData
       
     - name: Install SteamPython
-      run: pip --disable-pip-version-check install -Uq steam[client]
+      run: pip3 --disable-pip-version-check install -Uq steam[client]
   
     - name: Update depot cache
-      run: python ./.github/CheckForSquadServerUpdate.py
+      run: python3 ./.github/CheckForSquadServerUpdate.py
         
     - name: Stop & Remove any previous Server
       run: docker stop squad-server || true  && docker rm squad-server || true
