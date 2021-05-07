@@ -1,4 +1,4 @@
-name: UpdateMapRotation
+name: UpdateSquadServerData
 on:
   workflow_dispatch:
 jobs:
@@ -9,19 +9,54 @@ jobs:
       uses: actions/checkout@v2
       with: 
         token: ${{ github.token }}
-    - name: Stop & Remove any previous Server
-      run: docker stop squad-server || true  && docker rm squad-server || true
-    - name: Create the squad-server container and install the server
-      run: docker run -d --net=bridge -e PORT=7787 -e QUERYPORT=27165 -e RCONPORT=21114 --name=squad-server cm2network/squad
-    - name: Wait for Squad Server to install & boot
-      run: chmod +x .github/waitForServerStartup.sh && ./.github/waitForServerStartup.sh
-    - name: Extract the default LayerRotation, clean and write the result to file
-      run: >
-        LayerRotation=$(docker exec squad-server cat /home/steam/squad-dedicated/SquadGame/ServerConfig/LayerRotation.cfg) &&
-        chmod +x .github/cleanMapRotation.sh && ./.github/cleanMapRotation.sh "$LayerRotation" > ./data/LayerRotation.cfg
+        
+    - name: cancelling
+      uses: andymckay/cancel-action@0.2
+      if: test -f tmp/UpdateSquadServerData
+        
+    - name: Write the UpdateSquadServerData lock file
+      run: touch tmp/UpdateSquadServerData
+      
     - name: Commit & Push updated file
       uses: EndBug/add-and-commit@v7
       with:
         author_name: DSG-MapRotation Update-Bot
         author_email: privat@skyraptor.eu
-        message: 'Updated default LayerRotation'
+        message: 'Created UpdateMapRotation lock file'
+        add: tmp/UpdateSquadServerData
+        
+    - name: Setup python
+      uses: actions/setup-python@v2
+      
+    - name: Install SteamPython
+      run: python -m pip --disable-pip-version-check install -Uq steam[client]
+  
+    - name: Update depot cache
+      run: python ./.github/CheckForSquadServerUpdate.py
+        
+    - name: Stop & Remove any previous Server
+      run: docker stop squad-server || true  && docker rm squad-server || true
+      
+    - name: Create the squad-server container and install the server
+      run: docker run -d --net=bridge -e PORT=7787 -e QUERYPORT=27165 -e RCONPORT=21114 --name=squad-server cm2network/squad
+      
+    - name: Wait for Squad Server to install & boot
+      run: chmod +x .github/waitForServerStartup.sh && ./.github/waitForServerStartup.sh
+      
+    - name: Extract the default LayerRotation, clean and write the result to file
+      run: >
+        LayerRotation=$(docker exec squad-server cat /home/steam/squad-dedicated/SquadGame/ServerConfig/LayerRotation.cfg) &&
+        chmod +x .github/cleanMapRotation.sh && ./.github/cleanMapRotation.sh "$LayerRotation" > ./data/LayerRotation.cfg
+        
+    - name: Extract raw ServerConfig folder
+      run: docker cp squad-server:/home/steam/squad-dedicated/SquadGame/ServerConfig data/ServerConfig
+        
+    - name: Remove the UpdateSquadServerData lock file
+      run: rm tmp/UpdateSquadServerData
+        
+    - name: Commit & Push updated file
+      uses: EndBug/add-and-commit@v7
+      with:
+        author_name: DSG-MapRotation Update-Bot
+        author_email: privat@skyraptor.eu
+        message: 'Updated Squad-Server Data!'
