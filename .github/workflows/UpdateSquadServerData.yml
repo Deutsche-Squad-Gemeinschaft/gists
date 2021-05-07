@@ -23,7 +23,7 @@ jobs:
     - name: Write the UpdateSquadServerData lock file
       run: touch tmp/UpdateSquadServerData
       
-    - name: Commit & Push updated file
+    - name: Comit lock file
       uses: EndBug/add-and-commit@v7
       with:
         author_name: DSG-MapRotation Update-Bot
