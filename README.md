@@ -23,7 +23,7 @@ The repository contains the following data:
 ### Checkport
 Just a small helper to check if a port is open and something is listening.
 ```
-bash <(curl -s https://raw.githubusercontent.com/Deutsche-Squad-Gemeinschaft/gists/master/validateMapRotation.sh) IP PORT
+bash <(curl -s https://raw.githubusercontent.com/Deutsche-Squad-Gemeinschaft/gists/master/checkport.sh) IP PORT
 ```
 
 ### ValidateMapRotation
