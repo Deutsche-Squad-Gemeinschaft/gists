@@ -30,9 +30,6 @@ jobs:
         author_email: privat@skyraptor.eu
         message: 'Created UpdateMapRotation lock file'
         add: tmp/UpdateSquadServerData
-      
-    - name: Install SteamPython
-      run: python3 -m pip --disable-pip-version-check install -Uq --upgrade --user steam[client]
   
     - name: Update depot cache
       run: python3 ./.github/CheckForSquadServerUpdate.py
