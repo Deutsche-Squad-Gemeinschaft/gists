@@ -32,7 +32,7 @@ jobs:
         add: tmp/UpdateSquadServerData
       
     - name: Install SteamPython
-      run: python3 -m pip --disable-pip-version-check install -Uq steam[client] --user
+      run: python3 -m pip --disable-pip-version-check install -Uq --upgrade --user steam[client]
   
     - name: Update depot cache
       run: python3 ./.github/CheckForSquadServerUpdate.py
