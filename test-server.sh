@@ -48,11 +48,11 @@ sudo usermod -aG docker $USER
 mkdir -p $HOME/squad-data
 chmod 777 $HOME/squad-data
 
+# Cleanup
+docker stop squad-server || true  && docker rm squad-server || true
+
 # Start the server and wait for full startup
 startServer
-
-# Stop the server
-docker stop squad-server
 
 # Rename the Server
 sed -i 's/ServerName=".*"/ServerName="'"$SERVERNAME"'"/g' $HOME/squad-data/SquadGame/ServerConfig/Server.cfg
@@ -65,9 +65,10 @@ fi
 # Install mods if IDs are provided as first parameter
 if [ ! -z "$MODIDS" ]; then
   for i in $(echo $variable | sed "s/,/ /g"); do
-      docker exec -it squad-server bash -c '$STEAMCMDDIR/steamcmd.sh +login anonymous +force_install_dir $STEAMAPPDIR +workshop_download_item 393380 '"$i"' +quit && cp -R $STEAMAPPDIR/steamapps/workshop/content/393380/'"$i"' $STEAMAPPDIR/SquadGame/Plugins/Mods/'
+      docker exec squad-server bash -c '$STEAMCMDDIR/steamcmd.sh +login anonymous +force_install_dir $STEAMAPPDIR +workshop_download_item 393380 '"$i"' +quit && cp -R $STEAMAPPDIR/steamapps/workshop/content/393380/'"$i"' $STEAMAPPDIR/SquadGame/Plugins/Mods/'
   done
 fi
 
-# Start the server and wait for full startup
+# Re-Start the server and wait for full startup
+docker stop squad-server
 startServer
