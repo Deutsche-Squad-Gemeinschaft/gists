@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Usage:
+# ./test-server.sh "Server Name" "Mod1ID,Mod2ID,Mod3ID,..."
+#
+
+function startServer() {
+  # Start the server and wait for full startup
+  docker run -d -v $HOME/squad-data:/home/steam/squad-dedicated --net=host -e PORT=7787 -e QUERYPORT=27165 -e RCONPORT=21114 --name=squad-server cm2network/squad
+  bash <(curl -s https://raw.githubusercontent.com/Deutsche-Squad-Gemeinschaft/squad-rcon-php/master/.github/waitForServerStartup.sh)
+}
+
+# Get arguments or default values
+SERVERNAME=${1:-"Squad Server"}
+MODIDS=${2:-""}
+
+# Setup Docker
+sudo apt-get remove -y docker docker-engine docker.io containerd runc || true
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --batch --yes --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+sudo echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+sudo getent group docker || sudo groupadd docker
+sudo usermod -aG docker $USER
+
+# Add volume directory
+mkdir -p $HOME/squad-data
+chmod 777 $HOME/squad-data
+
+# Start the server and wait for full startup
+startServer
+
+# Stop the server
+docker stop squad-server
+
+# Rename the Server
+sed -i 's/"Squad Dedicated Server"/"'"$SERVERNAME"'"/g' $HOME/squad-data/SquadGame/ServerConfig/Server.cfg
+
+# Install mods if IDs are provided as first parameter
+if [ ! -z "$MODIDS" ], then
+  for i in $(echo $variable | sed "s/,/ /g"); do
+      docker exec -it squad-server bash -c '$STEAMCMDDIR/steamcmd.sh +login anonymous +force_install_dir $STEAMAPPDIR +workshop_download_item 393380 '"$i"' +quit && cp -R $STEAMAPPDIR/steamapps/workshop/content/393380/'"$i"' $STEAMAPPDIR/SquadGame/Plugins/Mods/'
+  done
+fi
+
+# Start the server and wait for full startup
+startServer
