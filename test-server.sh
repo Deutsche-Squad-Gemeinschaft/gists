@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Usage:
-# ./test-server.sh "Server Name" "Mod1ID,Mod2ID,Mod3ID,..."
+# bash <(curl -s https://raw.githubusercontent.com/Deutsche-Squad-Gemeinschaft/gists/master/test-server.sh) "Server Name" "Mod1ID,Mod2ID,Mod3ID,..."
 #
 
 function startServer() {
