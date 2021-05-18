@@ -5,11 +5,28 @@
 # bash <(curl -s https://raw.githubusercontent.com/Deutsche-Squad-Gemeinschaft/gists/master/test-server.sh) "Server Name" "PASSWORD" "Mod1ID,Mod2ID,Mod3ID,..."
 #
 
+function waitForStartup() {
+  local MAXSTEPS=$(($1 / 3))
+  
+  for i in {1..$MAXSTEPS}; do
+    timeout --signal=SIGINT 3 docker logs -f squad-server 2>&1 | grep -qe "LogOnlineSession"
+    if [ "$i" -gt "$MAXSTEPS" ]; then
+      echo "Server startup did timeout"
+      exit 1
+    else
+      # Show a sign that we are alive
+      echo "."
+      exit 0
+    fi
+  done
+}
+
 function startServer() {
   # Start the server and wait for full startup
   docker run -d -v $HOME/squad-data:/home/steam/squad-dedicated --net=host -e PORT=7787 -e QUERYPORT=27165 -e RCONPORT=21114 --name=squad-server cm2network/squad
-  bash <(curl -s https://raw.githubusercontent.com/Deutsche-Squad-Gemeinschaft/squad-rcon-php/master/.github/waitForServerStartup.sh)
+  waitForStartup ${1:-900}
 }
+
 
 # Get arguments or default values
 SERVERNAME=${1:-"Squad Server"}
