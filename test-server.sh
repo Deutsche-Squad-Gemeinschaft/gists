@@ -18,7 +18,7 @@ function waitForStartup() {
         exit 1
       else
         # Show a sign that we are alive
-        echo "Waiting for server startup... $i/$MAXSTEPS"
+        echo "Waiting for server startup... ($i/$MAXSTEPS)"
       fi
     else
       # Server seems to have started, break the loop
