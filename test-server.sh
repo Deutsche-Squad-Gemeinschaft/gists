@@ -22,17 +22,32 @@ function waitForStartup() {
       fi
     else
       # Server seems to have started, break the loop
+      echo "Server Started!"
       break
     fi
   done
 }
 
-function startServer() {
+function clearServer() {
+  docker stop squad-server || true && docker rm squad-server || true
+}
+
+function createServer() {
   # Start the server and wait for full startup
   docker run -d -v $HOME/squad-data:/home/steam/squad-dedicated --net=host -e PORT=7787 -e QUERYPORT=27165 -e RCONPORT=21114 --name=squad-server cm2network/squad
   waitForStartup ${1:-900}
 }
 
+function startServer() {
+  # Start the server and wait for full startup
+  docker start squad-server
+  waitForStartup ${1:-900}
+}
+
+function stopServer() {
+  # Start the server and wait for full startup
+  docker stop squad-server
+}
 
 # Get arguments or default values
 SERVERNAME=${1:-"Squad Server"}
@@ -54,11 +69,9 @@ sudo usermod -aG docker $USER
 mkdir -p $HOME/squad-data
 chmod 777 $HOME/squad-data
 
-# Cleanup
-docker stop squad-server || true && docker rm squad-server || true
-
-# Start the server and wait for full startup
-startServer
+# Remove old server container and create a new one
+clearServer
+createServer
 
 # Rename the Server
 sed -i 's/ServerName=".*"/ServerName="'"$SERVERNAME"'"/g' $HOME/squad-data/SquadGame/ServerConfig/Server.cfg
@@ -76,5 +89,5 @@ if [ ! -z "$MODIDS" ]; then
 fi
 
 # Re-Start the server and wait for full startup
-docker stop squad-server
+stopServer
 startServer
