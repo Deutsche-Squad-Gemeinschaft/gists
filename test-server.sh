@@ -10,13 +10,19 @@ function waitForStartup() {
   
   for i in $(seq 1 $MAXSTEPS); do
     timeout --signal=SIGINT 3 docker logs -f squad-server 2>&1 | grep -qe "LogOnlineSession"
-    if [ "$i" -gt "$MAXSTEPS" ]; then
-      echo "Server startup did timeout"
-      exit 1
+    
+    if [ $? == 1 ]; then
+      if [ "$i" -gt "$MAXSTEPS" ]; then
+        # Notify of failure and break
+        echo "Server startup did timeout"
+        exit 1
+      else
+        # Show a sign that we are alive
+        echo "."
+      fi
     else
-      # Show a sign that we are alive
-      echo "."
-      exit 0
+      # Server seems to have started, break the loop
+      break
     fi
   done
 }
