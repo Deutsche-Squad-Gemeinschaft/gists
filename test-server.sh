@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Usage:
-# bash <(curl -s https://raw.githubusercontent.com/Deutsche-Squad-Gemeinschaft/gists/master/test-server.sh) "Server Name" "Mod1ID,Mod2ID,Mod3ID,..."
+# bash <(curl -s https://raw.githubusercontent.com/Deutsche-Squad-Gemeinschaft/gists/master/test-server.sh) "Server Name" "" "Mod1ID,Mod2ID,Mod3ID,..."
+# bash <(curl -s https://raw.githubusercontent.com/Deutsche-Squad-Gemeinschaft/gists/master/test-server.sh) "Server Name" "PASSWORD" "Mod1ID,Mod2ID,Mod3ID,..."
 #
 
 function startServer() {
@@ -12,7 +13,8 @@ function startServer() {
 
 # Get arguments or default values
 SERVERNAME=${1:-"Squad Server"}
-MODIDS=${2:-""}
+PASSWORD=${2:-""}
+MODIDS=${3:-""}
 
 # Setup Docker
 sudo apt-get remove -y docker docker-engine docker.io containerd runc || true
@@ -38,8 +40,13 @@ docker stop squad-server
 # Rename the Server
 sed -i 's/"Squad Dedicated Server"/"'"$SERVERNAME"'"/g' $HOME/squad-data/SquadGame/ServerConfig/Server.cfg
 
+# Set Password if provided
+if [ ! -z "$PASSWORD" ]; then
+  echo 'SrverPassword='"$ASSWORD" >> $HOME/squad-data/SquadGame/ServerConfig/Server.cfg
+fi
+
 # Install mods if IDs are provided as first parameter
-if [ ! -z "$MODIDS" ], then
+if [ ! -z "$MODIDS" ]; then
   for i in $(echo $variable | sed "s/,/ /g"); do
       docker exec -it squad-server bash -c '$STEAMCMDDIR/steamcmd.sh +login anonymous +force_install_dir $STEAMAPPDIR +workshop_download_item 393380 '"$i"' +quit && cp -R $STEAMAPPDIR/steamapps/workshop/content/393380/'"$i"' $STEAMAPPDIR/SquadGame/Plugins/Mods/'
   done
