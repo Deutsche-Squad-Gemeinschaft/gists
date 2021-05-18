@@ -55,7 +55,7 @@ startServer
 docker stop squad-server
 
 # Rename the Server
-sed -i 's/"Squad Dedicated Server"/"'"$SERVERNAME"'"/g' $HOME/squad-data/SquadGame/ServerConfig/Server.cfg
+sed -i 's/ServerName=".*"/ServerName="'"$SERVERNAME"'"/g' $HOME/squad-data/SquadGame/ServerConfig/Server.cfg
 
 # Set Password if provided
 if [ ! -z "$PASSWORD" ]; then
