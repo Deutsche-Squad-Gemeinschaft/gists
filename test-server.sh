@@ -6,10 +6,10 @@
 #
 
 function waitForStartup() {
-  local MAXSTEPS=$(($1 / 3))
+  local MAXSTEPS=$(($1 / 10))
   
   for i in $(seq 1 $MAXSTEPS); do
-    timeout --signal=SIGINT 3 docker logs -f squad-server 2>&1 | grep -qe "LogOnlineSession"
+    timeout --signal=SIGINT 10 docker logs -f squad-server 2>&1 | grep -qe "LogOnlineSession"
     
     if [ $? == 1 ]; then
       if [ "$i" -gt "$MAXSTEPS" ]; then
