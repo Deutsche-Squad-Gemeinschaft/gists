@@ -29,24 +29,20 @@ function waitForStartup() {
 }
 
 function clearServer() {
+  # Stop and remove the container if exists
   docker stop squad-server || true && docker rm squad-server || true
 }
 
 function createServer() {
-  # Start the server and wait for full startup
+  # Create the container and wait for full startup
   docker run -d -v $HOME/squad-data:/home/steam/squad-dedicated --net=host -e PORT=7787 -e QUERYPORT=27165 -e RCONPORT=21114 --name=squad-server cm2network/squad
   waitForStartup ${1:-900}
 }
 
-function startServer() {
-  # Start the server and wait for full startup
-  docker start squad-server
+function restartServer() {
+  # Re-Start the container and wait for full startup
+  docker restart squad-server
   waitForStartup ${1:-900}
-}
-
-function stopServer() {
-  # Start the server and wait for full startup
-  docker stop squad-server
 }
 
 # Get arguments or default values
@@ -89,5 +85,4 @@ if [ ! -z "$MODIDS" ]; then
 fi
 
 # Re-Start the server and wait for full startup
-stopServer
-startServer
+restartServer
