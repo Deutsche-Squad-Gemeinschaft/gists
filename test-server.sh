@@ -55,7 +55,7 @@ mkdir -p $HOME/squad-data
 chmod 777 $HOME/squad-data
 
 # Cleanup
-docker stop squad-server || true  && docker rm squad-server || true
+docker stop squad-server || true && docker rm squad-server || true
 
 # Start the server and wait for full startup
 startServer
