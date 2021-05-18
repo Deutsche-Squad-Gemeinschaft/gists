@@ -76,7 +76,11 @@ sed -i 's/ServerName=".*"/ServerName="'"$SERVERNAME"'"/g' $HOME/squad-data/Squad
 
 # Set Password if provided
 if [ ! -z "$PASSWORD" ]; then
-  echo 'SrverPassword='"$ASSWORD" >> $HOME/squad-data/SquadGame/ServerConfig/Server.cfg
+  if grep -q SomeString "$File"; then
+    sed -i 's/ServerPassword=".*"/ServerPassword="'"$PASSWORD"'"/g' $HOME/squad-data/SquadGame/ServerConfig/Server.cfg
+  else
+    echo 'ServerPassword='"$PASSWORD" >> $HOME/squad-data/SquadGame/ServerConfig/Server.cfg
+  fi
 fi
 
 echo "Server successfully configured!"
@@ -93,4 +97,4 @@ fi
 # Re-Start the server and wait for full startup
 restartServer
 
-echo "Finsied Setup, connect to: \"$SERVERNAME\" in the Server-Browser or use the following Link: steam://connect/$(dig @resolver4.opendns.com myip.opendns.com +short):7787/"
+echo "Finsied Setup, connect to: \"$SERVERNAME\" in the Server-Browser or use the following Link: \"steam://connect/$(dig @resolver4.opendns.com myip.opendns.com +short):7787/\""
