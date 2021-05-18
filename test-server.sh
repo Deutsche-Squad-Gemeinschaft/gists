@@ -76,7 +76,7 @@ sed -i 's/ServerName=".*"/ServerName="'"$SERVERNAME"'"/g' $HOME/squad-data/Squad
 
 # Set Password if provided
 if [ ! -z "$PASSWORD" ]; then
-  if [ grep -q "ServerPassword=" "$HOME/squad-data/SquadGame/ServerConfig/Server.cfg" ]; then
+  if grep -q "ServerPassword=" "$HOME/squad-data/SquadGame/ServerConfig/Server.cfg"; then
     sed -i 's/ServerPassword=".*"/ServerPassword="'"$PASSWORD"'"/g' $HOME/squad-data/SquadGame/ServerConfig/Server.cfg
   else
     echo 'ServerPassword='"$PASSWORD" >> $HOME/squad-data/SquadGame/ServerConfig/Server.cfg
