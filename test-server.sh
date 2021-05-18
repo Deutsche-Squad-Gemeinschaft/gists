@@ -69,6 +69,8 @@ chmod 777 $HOME/squad-data
 clearServer
 createServer
 
+echo "Configuring the server..."
+
 # Rename the Server
 sed -i 's/ServerName=".*"/ServerName="'"$SERVERNAME"'"/g' $HOME/squad-data/SquadGame/ServerConfig/Server.cfg
 
@@ -77,12 +79,18 @@ if [ ! -z "$PASSWORD" ]; then
   echo 'SrverPassword='"$ASSWORD" >> $HOME/squad-data/SquadGame/ServerConfig/Server.cfg
 fi
 
+echo "Server successfully configured!"
+
 # Install mods if IDs are provided as first parameter
 if [ ! -z "$MODIDS" ]; then
   for i in $(echo $variable | sed "s/,/ /g"); do
+      echo "Installing Mod $i..."
       docker exec squad-server bash -c '$STEAMCMDDIR/steamcmd.sh +login anonymous +force_install_dir $STEAMAPPDIR +workshop_download_item 393380 '"$i"' +quit && cp -R $STEAMAPPDIR/steamapps/workshop/content/393380/'"$i"' $STEAMAPPDIR/SquadGame/Plugins/Mods/'
+      echo "Mod installed!"
   done
 fi
 
 # Re-Start the server and wait for full startup
 restartServer
+
+echo "Finsied Setup, connect to: \"$SERVERNAME\" in the Server-Browser or use the following Link: steam://connect/$(dig @resolver4.opendns.com myip.opendns.com +short):7787/"
