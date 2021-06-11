@@ -49,7 +49,7 @@ jobs:
         chmod +x .github/cleanMapRotation.sh && ./.github/cleanMapRotation.sh "$LayerRotation" > ./data/LayerRotation.cfg
         
     - name: Extract raw ServerConfig folder
-      run: docker cp squad-server:/home/steam/squad-dedicated/SquadGame/ServerConfig data/ServerConfig
+      run: mkdir -p data/ServerConfig && docker cp squad-server:/home/steam/squad-dedicated/SquadGame/ServerConfig/. data/ServerConfig
         
     - name: Remove the UpdateSquadServerData lock file
       run: rm tmp/UpdateSquadServerData
