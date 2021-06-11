@@ -14,7 +14,7 @@ function waitForStartup() {
           exit 1
         else
           # Show a sign that we are alive
-          echo "Waiting for server startup... ($i/$MAXSTEPS). Last Log: \"${docker logs -n 1 squad-server 2>&1 | sed -z '$ s/\n$//'}\""
+          echo "Waiting for server startup... ($i/$MAXSTEPS). Last Log: \"$(docker logs -n 1 squad-server 2>&1 | sed -z '$ s/\n$//')\""
         fi
       else
         # Server seems to have started, break the loop
