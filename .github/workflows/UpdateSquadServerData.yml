@@ -23,7 +23,7 @@ jobs:
     - name: Write the UpdateSquadServerData lock file
       run: touch tmp/UpdateSquadServerData
       
-    - name: Comit lock file
+    - name: Commit lock file
       uses: EndBug/add-and-commit@v7
       with:
         author_name: DSG-MapRotation Update-Bot
@@ -52,9 +52,11 @@ jobs:
       run: mkdir -p data/ServerConfig && docker cp squad-server:/home/steam/squad-dedicated/SquadGame/ServerConfig/. data/ServerConfig
         
     - name: Remove the UpdateSquadServerData lock file
+      if: always()
       run: rm tmp/UpdateSquadServerData
         
     - name: Commit & Push updated file
+      if: always()
       uses: EndBug/add-and-commit@v7
       with:
         author_name: DSG-MapRotation Update-Bot
