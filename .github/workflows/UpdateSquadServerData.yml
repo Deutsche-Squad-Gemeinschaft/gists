@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 jobs:
   unit-tests:
-    runs-on: [self-hosted, ec2]
+    runs-on: [self-hosted, linux, x64, ec2]
     steps:
     - name: Pull repository
       uses: actions/checkout@v2
