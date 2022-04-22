@@ -1,0 +1,34 @@
+name: CheckForSquadServerUpdate
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Pull repository
+      uses: actions/checkout@v2
+        
+    - name: Setup python
+      uses: actions/setup-python@v2
+      
+    - name: Install SteamPython
+      run: python -m pip --disable-pip-version-check install -Uq steam[client]
+      
+    - name: Check for updates
+      id: updatecheck
+      run: echo ::set-output name=found::$(python ./.github/CheckForSquadServerUpdate.py)
+      
+    - name: Check lock file exists
+      id: check_lock
+      uses: andstor/file-existence-action@v1
+      with:
+        files: "tmp/UpdateSquadServerData"
+    
+    - name: Dispatch UpdateSquadServerData workflow if there is an update and the lock file does not already exist
+      if: steps.updatecheck.outputs.found == 'Update found.' && steps.check_lock.outputs.files_exists == 'false'
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: UpdateSquadServerData
+        token: ${{ secrets.PERSONAL_TOKEN }}
