@@ -47,7 +47,7 @@ jobs:
       run: |
         mkdir -p data/ServerConfig
         docker cp squad-server:/home/steam/squad-dedicated/SquadGame/ServerConfig/. data/ServerConfig
-        find data/ServerConfig -type f -print0 | xargs -0 dos2unix
+        find ./data/ServerConfig/ -type f -print0 | xargs -0 dos2unix
 
     - name: Extract the default LayerRotation, clean and write the result to file
       run: >
