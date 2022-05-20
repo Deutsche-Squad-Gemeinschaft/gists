@@ -19,11 +19,6 @@ jobs:
     - name: cancelling
       uses: andymckay/cancel-action@0.2
       if: steps.check_lock.outputs.files_exists == 'true'
-      
-    - name: Install dos2unix
-      run: |
-        sudo apt-get update
-        sudo apt-get install dos2unix
         
     - name: Write the UpdateSquadServerData lock file
       run: touch tmp/UpdateSquadServerData
