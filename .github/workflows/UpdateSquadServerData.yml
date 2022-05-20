@@ -42,7 +42,13 @@ jobs:
       
     - name: Wait for Squad Server to install & boot
       run: chmod +x .github/waitForServerStartup.sh && ./.github/waitForServerStartup.sh
-      
+
+    - name: Extract raw ServerConfig folder (and convert CRLF to LF)
+      run: |
+        mkdir -p data/ServerConfig
+        docker cp squad-server:/home/steam/squad-dedicated/SquadGame/ServerConfig/. data/ServerConfig
+        find data/ServerConfig -type f -print0 | xargs -0 dos2unix
+
     - name: Extract the default LayerRotation, clean and write the result to file
       run: >
         LayerRotation=$(docker exec squad-server cat /home/steam/squad-dedicated/SquadGame/ServerConfig/LayerRotation.cfg) &&
@@ -52,10 +58,9 @@ jobs:
       run: docker exec squad-server sed -n "s/^.*LogSquad:\sAdded\sAvailable\sLayer\s:\s\(\S*\).*$/\1/p" /home/steam/squad-dedicated/SquadGame/Saved/Logs/SquadGame.log > ./data/LoadedLayersList.cfg
         
     - name: Extract the InvalidLayersList by analyzing what layers could not be added by the server.
-      run: docker exec squad-server sed -n "s/^.*LogSquad:\sWarning:\s\(\S*\)\swas\snot\sadded\sto\srotation\slist,\splease\scheck\sthat\sit\sis\sa\svalid\slayer.*$/\1/p" /home/steam/squad-dedicated/SquadGame/Saved/Logs/SquadGame.log > ./data/InvalidLayersList.cfg
-        
-    - name: Extract raw ServerConfig folder
-      run: mkdir -p data/ServerConfig && docker cp squad-server:/home/steam/squad-dedicated/SquadGame/ServerConfig/. data/ServerConfig
+      run: |
+        docker exec squad-server sed -n "s/^.*LogSquad:\sWarning:\s\(\S*\)\swas\snot\sadded\sto\srotation\slist,\splease\scheck\sthat\sit\sis\sa\svalid\slayer.*$/\1/p" /home/steam/squad-dedicated/SquadGame/Saved/Logs/SquadGame.log > ./data/InvalidLayersList.cfg
+        grep -F -x -v -f ./data/ServerConfig/ExcludedLayers.cfg ./data/InvalidLayersList.cfg > ./data/InvalidLayersList.cfg
         
     - name: Remove the UpdateSquadServerData lock file
       if: always()
