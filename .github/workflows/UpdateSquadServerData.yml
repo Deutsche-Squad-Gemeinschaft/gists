@@ -48,6 +48,11 @@ jobs:
         LayerRotation=$(docker exec squad-server cat /home/steam/squad-dedicated/SquadGame/ServerConfig/LayerRotation.cfg) &&
         chmod +x .github/cleanMapRotation.sh && ./.github/cleanMapRotation.sh "$LayerRotation" > ./data/LayerRotation.cfg
         
+    - name: Extract the ActualLayersList by analyzing what layers the server did actually load.
+      run: |
+        docker exec squad-server sed -n "s/^.*LogSquad:\sAdded\sAvailable\sLayer\s:\s\(\S*\).*$/\1/p" /home/steam/squad-dedicated/SquadGame/Saved/Logs/SquadGame.log > ActualLayersList.cfg
+        echo "$(docker exec squad-server cat /home/steam/squad-dedicated/SquadGame/Saved/Logs/ActualLayersList.cfg)" > ./data/ActualLayersList.cfg
+        
     - name: Extract raw ServerConfig folder
       run: mkdir -p data/ServerConfig && docker cp squad-server:/home/steam/squad-dedicated/SquadGame/ServerConfig/. data/ServerConfig
         
