@@ -19,6 +19,11 @@ jobs:
     - name: cancelling
       uses: andymckay/cancel-action@0.2
       if: steps.check_lock.outputs.files_exists == 'true'
+      
+    - name: Install dos2unix
+      run: |
+        sudo apt-get update
+        sudo apt-get install dos2unix
         
     - name: Write the UpdateSquadServerData lock file
       run: touch tmp/UpdateSquadServerData
@@ -47,7 +52,6 @@ jobs:
       run: |
         mkdir -p data/ServerConfig
         docker cp squad-server:/home/steam/squad-dedicated/SquadGame/ServerConfig/. data/ServerConfig
-        ls -l ./data/ServerConfig/
         find ./data/ServerConfig/ -type f -print0 | xargs -0 dos2unix
 
     - name: Extract the default LayerRotation, clean and write the result to file
