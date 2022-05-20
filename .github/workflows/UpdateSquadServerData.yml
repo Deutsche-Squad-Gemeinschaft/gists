@@ -48,10 +48,15 @@ jobs:
         LayerRotation=$(docker exec squad-server cat /home/steam/squad-dedicated/SquadGame/ServerConfig/LayerRotation.cfg) &&
         chmod +x .github/cleanMapRotation.sh && ./.github/cleanMapRotation.sh "$LayerRotation" > ./data/LayerRotation.cfg
         
-    - name: Extract the ActualLayersList by analyzing what layers the server did actually load.
+    - name: Extract the LoadedLayersList by analyzing what layers the server did actually load.
       run: |
-        docker exec squad-server sed -n "s/^.*LogSquad:\sAdded\sAvailable\sLayer\s:\s\(\S*\).*$/\1/p" /home/steam/squad-dedicated/SquadGame/Saved/Logs/SquadGame.log > ActualLayersList.cfg
-        echo "$(docker exec squad-server cat /home/steam/squad-dedicated/SquadGame/Saved/Logs/ActualLayersList.cfg)" > ./data/ActualLayersList.cfg
+        docker exec squad-server sed -n "s/^.*LogSquad:\sAdded\sAvailable\sLayer\s:\s\(\S*\).*$/\1/p" /home/steam/squad-dedicated/SquadGame/Saved/Logs/SquadGame.log > LoadedLayersList.cfg
+        docker cp squad-server:/home/steam/squad-dedicated/SquadGame/Saved/Logs/LoadedLayersList.cfg ./data/LoadedLayersList.cfg
+        
+    - name: Extract the InvalidLayersList by analyzing what layers the server did actually load.
+      run: |
+        docker exec squad-server sed -n "s/^.*LogSquad:\sWarning:\s\(\S*\)\swas\snot\sadded\sto\srotation\slist,\splease\scheck\sthat\sit\sis\sa\svalid\slayer.*$/\1/p" /home/steam/squad-dedicated/SquadGame/Saved/Logs/SquadGame.log > InvalidLayersList.cfg
+        docker cp squad-server:/home/steam/squad-dedicated/SquadGame/Saved/Logs/InvalidLayersList.cfg ./data/InvalidLayersList.cfg
         
     - name: Extract raw ServerConfig folder
       run: mkdir -p data/ServerConfig && docker cp squad-server:/home/steam/squad-dedicated/SquadGame/ServerConfig/. data/ServerConfig
