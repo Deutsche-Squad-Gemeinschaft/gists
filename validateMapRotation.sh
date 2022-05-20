@@ -12,7 +12,7 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 # Define the OWI provided maps from automatically updated MapRotation.cfg
-readarray -t OfficalMaps < <(curl -s https://raw.githubusercontent.com/Deutsche-Squad-Gemeinschaft/gists/master/data/LayerRotation.cfg | sed -r '/^\s*$/d' | sed 's/[ \t]*$//' | sed 's/\r//g')
+readarray -t OfficalMaps < <(curl -s https://raw.githubusercontent.com/Deutsche-Squad-Gemeinschaft/gists/master/data/LoadedLayersList.cfg | sed -r '/^\s*$/d' | sed 's/[ \t]*$//' | sed 's/\r//g')
 
 # Allow custom maps to be defined externally
 CustomMaps=${CustomMaps:=''}
