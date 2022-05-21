@@ -16,8 +16,10 @@
 This repository contains various data related to server configuration that is being extracted from the squad dedicated server files. These files will be updated automatically once the squad dedicated server steam depot is being updated, in other terms **these files will/should always be up to date**.
 
 The repository contains the following data:
-* [Cleaned LayerRotation.cfg](https://github.com/Deutsche-Squad-Gemeinschaft/gists/tree/master/data/ServerConfig)
-* [ServerComfig Folder](https://github.com/Deutsche-Squad-Gemeinschaft/gists/blob/master/data/LayerRotation.cfg)
+* [Cleaned LayerRotation.cfg](https://github.com/Deutsche-Squad-Gemeinschaft/gists/blob/master/data/LayerRotation.cfg)
+* [Loaded Layers (from log)](https://github.com/Deutsche-Squad-Gemeinschaft/gists/blob/master/data/LoadedLayersList.cfg)
+* [List of Layers that could NOT be loaded (from log)](https://github.com/Deutsche-Squad-Gemeinschaft/gists/blob/master/data/InvalidLayersList.cfg)
+* [Unmodified ServerComfig directory](https://github.com/Deutsche-Squad-Gemeinschaft/gists/tree/master/data/ServerConfig)
 
 ## Tools
 ### Checkport
