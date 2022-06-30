@@ -58,7 +58,7 @@ jobs:
       run: docker exec squad-server sed -n "s/^.*LogSquad:\sAdded\sAvailable\sLayer\s:\s\(\S*\).*$/\1/p" /home/steam/squad-dedicated/SquadGame/Saved/Logs/SquadGame.log > ./data/LoadedLayersList.cfg
         
     - name: Extract the InvalidLayersList by analyzing what layers could not be added by the server.
-      run:
+      run: |
         docker exec squad-server sed -n "s/^.*LogSquad:\sWarning:\s\(\S*\)\swas\snot\sadded\sto\srotation\slist,\splease\scheck\sthat\sit\sis\sa\svalid\slayer.*$/\1/p" /home/steam/squad-dedicated/SquadGame/Saved/Logs/SquadGame.log > /tmp/InvalidLayersList.cfg
         grep -F -x -v -f -q ./data/ServerConfig/ExcludedLayers.cfg /tmp/InvalidLayersList.cfg > ./data/InvalidLayersList.cfg
         
