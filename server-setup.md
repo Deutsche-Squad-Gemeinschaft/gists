@@ -165,7 +165,7 @@ If you do not want to type out the full command above each time it is beneficial
 
 ```
 function sqserver() {
-    systemctl --user $2 §1
+    systemctl --user $2 $1
 }
 ```
 Save the file and source it with the following command `. ~/.bashrc`. Now you can use the command like so:
