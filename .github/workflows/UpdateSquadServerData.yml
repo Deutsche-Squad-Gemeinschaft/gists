@@ -32,7 +32,7 @@ jobs:
         add: tmp/UpdateSquadServerData
         
     - name: Setup Dependencies
-      run: apt install dos2unix
+      run: sudo apt install dos2unix
         
     - name: Setup Python
       uses: actions/setup-python@v4
