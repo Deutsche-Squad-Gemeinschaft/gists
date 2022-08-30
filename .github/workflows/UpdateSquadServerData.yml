@@ -12,6 +12,9 @@ jobs:
         
     - name: Setup python
       uses: actions/setup-python@v4
+      
+    - name: Install SteamPython
+      run: python -m pip --disable-pip-version-check install -Uq steam[client]
     
     - name: Check lock file exists
       id: check_lock
