@@ -4,19 +4,11 @@ on:
 jobs:
   unit-tests:
     runs-on: [self-hosted, linux, x64, ec2]
-    steps:
+    steps:      
     - name: Pull repository
       uses: actions/checkout@v3
       with: 
         token: ${{ github.token }}
-        
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10' 
-      
-    - name: Install SteamPython
-      run: python3 -m pip --disable-pip-version-check install -Uq steam[client]
     
     - name: Check lock file exists
       id: check_lock
@@ -38,6 +30,17 @@ jobs:
         author_email: privat@skyraptor.eu
         message: 'Created UpdateMapRotation lock file'
         add: tmp/UpdateSquadServerData
+        
+    - name: Setup Dependencies
+      run: apt install dos2unix
+        
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10' 
+      
+    - name: Install SteamPython
+      run: python3 -m pip --disable-pip-version-check install -Uq steam[client]
   
     - name: Update depot cache
       run: python3 ./.github/CheckForSquadServerUpdate.py
