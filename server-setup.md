@@ -53,7 +53,7 @@ Save this file **next to your squad-server** with the following folder structure
 
 ```
 Next link the file into your users services directory using the following command:
-```ln -s $HOME/Servers/public,service $HOME/.config/systemd/user/public.service```
+```ln -s $HOME/Servers/public.service $HOME/.config/systemd/user/public.service```
 
 In order for the service to start at boot you will have to enable it with the following command:
 ```systemctl --user enable public.service```
