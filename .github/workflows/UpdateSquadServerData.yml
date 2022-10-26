@@ -12,7 +12,7 @@ jobs:
     
     - name: Check lock file exists
       id: check_lock
-      uses: andstor/file-existence-action@v1
+      uses: andstor/file-existence-action@v2
       with:
         files: "tmp/UpdateSquadServerData"
           
