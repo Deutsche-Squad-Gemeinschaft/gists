@@ -17,7 +17,7 @@ jobs:
         files: "tmp/UpdateSquadServerData"
           
     - name: cancelling
-      uses: andymckay/cancel-action@0.2
+      uses: andymckay/cancel-action@0.3
       if: steps.check_lock.outputs.files_exists == 'true'
         
     - name: Write the UpdateSquadServerData lock file
