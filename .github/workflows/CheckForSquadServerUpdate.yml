@@ -30,7 +30,7 @@ jobs:
     
     - name: Dispatch UpdateSquadServerData workflow if there is an update and the lock file does not already exist
       if: steps.updatecheck.outputs.found == 'Update found.' && steps.check_lock.outputs.files_exists == 'false'
-      uses: benc-uk/workflow-dispatch@v1
+      uses: benc-uk/workflow-dispatch@v121
       with:
         workflow: UpdateSquadServerData
         token: ${{ secrets.PERSONAL_TOKEN }}
