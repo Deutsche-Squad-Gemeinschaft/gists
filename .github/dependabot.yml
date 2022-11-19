@@ -10,11 +10,3 @@ updates:
       interval: "daily"
     labels:
       - "Security"
-      
-  # Maintain dependencies for Maven
-  - package-ecosystem: "maven"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    labels:
-      - "Security"
